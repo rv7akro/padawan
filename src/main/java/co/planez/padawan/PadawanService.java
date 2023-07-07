@@ -16,6 +16,7 @@ import co.planez.padawan.common.RuntimeExceptionMapper;
 import co.planez.padawan.domain.persistence.Persistence;
 import co.planez.padawan.healthcheck.MinimalHealthCheck;
 import co.planez.padawan.resources.PadawanResource;
+import co.planez.padawan.resources.UserResource;
 //import co.planez.padawan.resources.SlackClient;
 import de.thomaskrille.dropwizard_template_config.TemplateConfigBundle;
 import de.thomaskrille.dropwizard_template_config.TemplateConfigBundleConfiguration;
@@ -76,6 +77,7 @@ public class PadawanService extends Application<PadawanConfiguration> {
 		
 		// Now set up the API
 		env.jersey().register(new PadawanResource(config));
+		env.jersey().register(new UserResource(config));
 		env.healthChecks().register("check", new MinimalHealthCheck());
 	}
 	

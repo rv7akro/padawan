@@ -1,18 +1,17 @@
 package co.planez.padawan.domain;
 
-import org.mongodb.morphia.annotations.Entity;
-import org.mongodb.morphia.annotations.Id;
+import dev.morphia.annotations.Entity;
+import dev.morphia.annotations.Id;
 
 /**
  * Used to store counters for other entities.
  */
 
-@Entity(value = "IDs", noClassnameStored = true)
+@Entity(value = "IDs")
 public class AutoIncrement {
 
   @Id
   protected String key;
-
   protected long value = 1L;
 
   protected AutoIncrement() {
