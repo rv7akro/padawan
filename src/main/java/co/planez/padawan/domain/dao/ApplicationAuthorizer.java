@@ -1,5 +1,8 @@
 package co.planez.padawan.domain.dao;
 
+import jakarta.ws.rs.container.ContainerRequestContext;
+
+import org.checkerframework.checker.nullness.qual.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,11 +14,11 @@ public class ApplicationAuthorizer implements Authorizer<User> {
 	private static final Logger LOG = LoggerFactory.getLogger(ApplicationAuthorizer.class);
 
     @Override
-    public boolean authorize(User user, String role) {
+	public boolean authorize(User principal, String role, @Nullable ContainerRequestContext requestContext) {
     	Role userRole = Role.valueOf(role);
     	switch (userRole) {
-    		case ADMIN : return user.isAdmin(); 
-    		case INSTRUCTOR : return user.isInstructor();
+    		case ADMIN : return principal.isAdmin(); 
+    		case INSTRUCTOR : return principal.isInstructor();
     		case USER  : return true;
     		default : return false;
     	}

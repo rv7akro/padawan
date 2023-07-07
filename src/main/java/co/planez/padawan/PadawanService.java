@@ -1,12 +1,11 @@
 package co.planez.padawan;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.EnumSet;
 import java.util.TimeZone;
 
-import javax.servlet.DispatcherType;
-import javax.servlet.FilterRegistration;
+import jakarta.servlet.DispatcherType;
+import jakarta.servlet.FilterRegistration;
 
 import org.eclipse.jetty.servlets.CrossOriginFilter;
 import org.slf4j.Logger;
@@ -18,13 +17,13 @@ import co.planez.padawan.healthcheck.MinimalHealthCheck;
 import co.planez.padawan.resources.PadawanResource;
 import co.planez.padawan.resources.UserResource;
 //import co.planez.padawan.resources.SlackClient;
-import de.thomaskrille.dropwizard_template_config.TemplateConfigBundle;
-import de.thomaskrille.dropwizard_template_config.TemplateConfigBundleConfiguration;
-import io.dropwizard.Application;
 import io.dropwizard.assets.AssetsBundle;
+import io.dropwizard.configuration.EnvironmentVariableSubstitutor;
+import io.dropwizard.configuration.SubstitutingSourceProvider;
+import io.dropwizard.core.Application;
+import io.dropwizard.core.setup.Bootstrap;
+import io.dropwizard.core.setup.Environment;
 import io.dropwizard.forms.MultiPartBundle;
-import io.dropwizard.setup.Bootstrap;
-import io.dropwizard.setup.Environment;
 
 public class PadawanService extends Application<PadawanConfiguration> {
 	private static final Logger LOG = LoggerFactory.getLogger(PadawanService.class);
@@ -41,9 +40,11 @@ public class PadawanService extends Application<PadawanConfiguration> {
 	@Override
 	public void initialize(Bootstrap<PadawanConfiguration> bootstrap) {
 		// bootstrap.addBundle(new AssetsBundle("/doc", "/doc", "index.html","html"));
-		bootstrap.addBundle(new TemplateConfigBundle(new TemplateConfigBundleConfiguration()));
-    		bootstrap.addBundle(new AssetsBundle("/assets/", "/", "index.html"));
-	    	bootstrap.addBundle(new MultiPartBundle());
+		bootstrap.setConfigurationSourceProvider(new SubstitutingSourceProvider(
+				bootstrap.getConfigurationSourceProvider(), 
+				new EnvironmentVariableSubstitutor(false)));
+		bootstrap.addBundle(new AssetsBundle("/assets/", "/", "index.html"));
+		bootstrap.addBundle(new MultiPartBundle());
 	}
 
 	@Override

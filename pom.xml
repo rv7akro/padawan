@@ -16,8 +16,8 @@
 		</project.reporting.outputEncoding>
 		<maven.compiler.source>11</maven.compiler.source>
 		<maven.compiler.target>11</maven.compiler.target>
-		<dropwizard.version>2.1.2</dropwizard.version>
-		<jackson.version>2.12.1</jackson.version>
+		<dropwizard.version>4.0.1</dropwizard.version>
+		<jackson.version>2.15.2</jackson.version>
 		<docker.pull.registry>docker.io</docker.pull.registry>
 		<docker.registry>planez.co:5000</docker.registry>
 		<dockerRegistry>${docker.registry}</dockerRegistry>
@@ -68,7 +68,7 @@
 		<dependency>
 			<groupId>com.fasterxml.jackson.core</groupId>
 			<artifactId>jackson-databind</artifactId>
-			<version>2.12.1</version>
+			<version>${jackson.version}</version>
 			<exclusions>
 				<exclusion>
 					<groupId>com.fasterxml.jackson.module</groupId>
@@ -79,19 +79,18 @@
 		<dependency>
 			<groupId>com.fasterxml.jackson.module</groupId>
 			<artifactId>jackson-module-jaxb-annotations</artifactId>
-			<version>2.12.1</version>
+			<version>${jackson.version}</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.dataformat/jackson-dataformat-yaml -->
 		<dependency>
 			<groupId>com.fasterxml.jackson.dataformat</groupId>
 			<artifactId>jackson-dataformat-yaml</artifactId>
-			<version>2.12.1</version>
+			<version>${jackson.version}</version>
 		</dependency>
-
 		<dependency>
-			<groupId>de.thomaskrille</groupId>
-			<artifactId>dropwizard-template-config</artifactId>
-			<version>1.5.0</version>
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-jsr310</artifactId>
+			<version>${jackson.version}</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/dev.morphia.morphia/core -->
 		<dependency>
@@ -99,13 +98,6 @@
 			<artifactId>morphia-core</artifactId>
 			<version>2.1.7</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.mongodb/mongo-java-driver 
-		<dependency>
-			<groupId>org.mongodb</groupId>
-			<artifactId>mongo-java-driver</artifactId>
-			<version>3.12.11</version>
-		</dependency>
-		-->
 		<!-- https://mvnrepository.com/artifact/org.mongodb/mongodb-driver-sync -->
 		<dependency>
 		    <groupId>org.mongodb</groupId>
@@ -134,11 +126,6 @@
 			<groupId>org.knowm</groupId>
 			<artifactId>sundial</artifactId>
 			<version>2.2.2</version>
-		</dependency>
-		<dependency>
-			<groupId>com.fasterxml.jackson.datatype</groupId>
-			<artifactId>jackson-datatype-jsr310</artifactId>
-			<version>2.6.0</version>
 		</dependency>
 	</dependencies>
 

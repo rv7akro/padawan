@@ -1,11 +1,8 @@
 package co.planez.padawan;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import io.dropwizard.Configuration;
+import io.dropwizard.core.Configuration;
 
 public class PadawanConfiguration extends Configuration {
 	private static PadawanConfiguration instance;
