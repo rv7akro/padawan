@@ -5,7 +5,7 @@
 
 	<groupId>co.planez</groupId>
 	<artifactId>padawan</artifactId>
-	<version>0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<packaging>jar</packaging>
 
 	<name>padawan</name>
@@ -52,12 +52,6 @@
 			<groupId>io.dropwizard</groupId>
 			<artifactId>dropwizard-metrics-graphite</artifactId>
 			<version>${dropwizard.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>io.dropwizard</groupId>
-			<artifactId>dropwizard-testing</artifactId>
-			<version>${dropwizard.version}</version>
-			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>io.dropwizard</groupId>
