@@ -18,7 +18,7 @@
       goto('overview');
     }
 	});
-  
+
   const login = async () => {
     var json = JSON.stringify({
       email: email,
@@ -57,7 +57,7 @@
       <!-- Left column container with background-->
       <div class="mb-12 md:mb-0 md:w-8/12 lg:w-6/12">
         <img
-          src="/RV7-splash.png"
+          src="/RV7-splash-small.png"
           class="w-full rounded-lg overflow-hidden"
           alt="RV7 Splash Image" />
       </div>
@@ -132,13 +132,7 @@
           </button>
 
           <!-- Divider -->
-          <div
-            class="my-4 flex items-center before:mt-0.5 before:flex-1 before:border-t before:border-neutral-300 after:mt-0.5 after:flex-1 after:border-t after:border-neutral-300">
-            <p
-              class="mx-4 mb-0 text-center font-semibold dark:text-neutral-200">
-              OR
-            </p>
-          </div>
+          <div class='divider'>OR</div>
 
           <!-- Email input -->
           <div class="relative mb-6" data-te-input-wrapper-init>

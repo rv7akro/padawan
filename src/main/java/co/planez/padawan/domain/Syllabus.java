@@ -23,6 +23,8 @@ public class Syllabus {
 	private long syllabusId;
 
 	private String name;
+	private List<String> elements;
+	private List<String> goals;
 	
 	public static String ID_KEY = "syllabus";
 
@@ -40,6 +42,22 @@ public class Syllabus {
 	@JsonView(SummaryView.Normal.class)
 	public String getName() {
 		return name;
+	}
+
+	public List<String> getElements() {
+		return elements;
+	}
+
+	public void setElements(List<String> elements) {
+		this.elements = elements;
+	}
+
+	public List<String> getGoals() {
+		return goals;
+	}
+
+	public void setGoals(List<String> goals) {
+		this.goals = goals;
 	}
 
 	@Override

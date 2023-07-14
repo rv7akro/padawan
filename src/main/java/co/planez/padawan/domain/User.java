@@ -34,7 +34,7 @@ public class User extends PrincipalImpl {
 	@JsonView(SummaryView.Normal.class)
 	private List<Role> roles;
 	@JsonView(DetailView.Normal.class)
-	private List<Student> students;
+	private List<Checklist> students;
 	
 	public static String ID_KEY = "users";
 

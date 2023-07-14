@@ -4,16 +4,15 @@ import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.Map;
-
 import java.util.List;
 import java.util.ArrayList;
 
-import jakarta.annotation.security.PermitAll;
 import jakarta.annotation.security.RolesAllowed;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
@@ -29,6 +28,8 @@ import co.planez.padawan.PadawanConfiguration;
 import co.planez.padawan.auth.AuthUtils;
 import co.planez.padawan.auth.HashUtils;
 import co.planez.padawan.domain.User;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
 import co.planez.padawan.domain.Role;
 import co.planez.padawan.domain.SummaryView;
 
@@ -64,12 +65,18 @@ public class UserResource {
 	}
 	
 	@GET
-	@PermitAll
+	@Path("{token}")
 	@JsonView(SummaryView.Normal.class)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response getUser(@Context SecurityContext context) {
-		User user = (User)context.getUserPrincipal();
-		return Response.ok().entity(user).build();
+	public Response getUser(@Context SecurityContext context,
+			@PathParam("token") String token) {
+		Jws<Claims> claims = AuthUtils.instance().decodeClaims(token);
+		User user = User.getByUsername(claims.getBody().getSubject());
+		if (user == null) {
+			return Response.status(404).build();
+		} else {
+			return Response.ok().entity(user).build();
+		}
 	}
 	
 	@GET
