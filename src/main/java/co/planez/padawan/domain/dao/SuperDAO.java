@@ -8,7 +8,6 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import co.planez.padawan.domain.User;
 import co.planez.padawan.domain.persistence.Persistence;
 import dev.morphia.Datastore;
 import dev.morphia.query.Query;
@@ -21,11 +20,10 @@ public class SuperDAO {
 	private Class<?> clazz;
 	private Datastore ds;
 	
-	public SuperDAO(Class<User> clazz) {
+	public SuperDAO(Class<?> clazz) {
 		this.clazz = clazz;
 		ds = Persistence.instance().datastore();
 	}
-
 	
 	public long count() {
 		return ds.find(clazz).count();
@@ -59,11 +57,11 @@ public class SuperDAO {
 		}
 	}
 	      
-	public void save(User user) {
+	public void save(Object user) {
 		ds.save(user);
 	}
 	
-	public void delete(User user) {
+	public void delete(Object user) {
 		ds.delete(user);
 	}
 	

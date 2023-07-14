@@ -12,7 +12,6 @@ import dev.morphia.annotations.Entity;
 import dev.morphia.annotations.Id;
 import dev.morphia.annotations.Transient;
 import io.dropwizard.auth.PrincipalImpl;
-import co.planez.padawan.domain.dao.Role;
 import co.planez.padawan.domain.dao.UserDAO;
 
 @Entity("Users")
@@ -23,17 +22,19 @@ public class User extends PrincipalImpl {
 	@JsonIgnore
 	private ObjectId id;
 	
-	@JsonView(UserViews.Login.class)
+	@JsonView(SummaryView.Login.class)
 	private long userId;
-	@JsonView(UserViews.Normal.class)
+	@JsonView(SummaryView.Normal.class)
 	private String fullName;
 	@JsonIgnore
 	private String password;
 	@Transient
-	@JsonView(UserViews.Login.class)
+	@JsonView(SummaryView.Login.class)
 	private String token;
-	@JsonView(UserViews.Normal.class)
+	@JsonView(SummaryView.Normal.class)
 	private List<Role> roles;
+	@JsonView(DetailView.Normal.class)
+	private List<Student> students;
 	
 	public static String ID_KEY = "users";
 
@@ -52,7 +53,7 @@ public class User extends PrincipalImpl {
 		return userId;
 	}
 	
-	@JsonView(UserViews.Normal.class)
+	@JsonView(SummaryView.Normal.class)
 	public String getName() {
 		return super.getName();
 	}
@@ -65,7 +66,6 @@ public class User extends PrincipalImpl {
 		this.fullName = fullName;
 	}
 
-//	@JsonIgnore
 	public boolean isAdmin() {
 		if (roles != null) {
 			return roles.contains(Role.ADMIN);
@@ -75,8 +75,11 @@ public class User extends PrincipalImpl {
 	}
 
 	public boolean isInstructor() {
-		// TODO: Figure out how the various roles work
-		return false;
+		if (roles != null) {
+			return roles.contains(Role.INSTRUCTOR);
+		} else {
+			return false;
+		}
 	}
 	
 	public String getPassword() {

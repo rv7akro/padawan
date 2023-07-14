@@ -1,13 +1,23 @@
-import adapter from '@sveltejs/adapter-static';
+import { vitePreprocess } from "@sveltejs/kit/vite";
+import adapter from "@sveltejs/adapter-static";
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
-	kit: {
-		// adapter-static only supports some environments, see https://kit.svelte.dev/docs/adapter-auto for a list.
-		// If your environment is not supported or you settled on a specific environment, switch out the adapter.
-		// See https://kit.svelte.dev/docs/adapters for more information about adapters.
-		adapter: adapter({fallback: '200.html'})
-	}
+  onwarn: (warning, handler) => {
+    if (warning.code.includes("a11y")) {
+      return;
+    }
+    handler(warning)
+  },
+  kit: {
+    adapter: adapter({
+      fallback: '200.html'
+    }),
+    prerender: {
+      handleMissingId: "warn",
+    },
+  },
+  preprocess: [vitePreprocess({})],
 };
 
 export default config;

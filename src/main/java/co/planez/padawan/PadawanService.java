@@ -11,13 +11,18 @@ import org.eclipse.jetty.servlets.CrossOriginFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import co.planez.padawan.auth.ApplicationAuthenticator;
+import co.planez.padawan.auth.ApplicationAuthorizer;
 import co.planez.padawan.common.RuntimeExceptionMapper;
+import co.planez.padawan.domain.User;
 import co.planez.padawan.domain.persistence.Persistence;
 import co.planez.padawan.healthcheck.MinimalHealthCheck;
 import co.planez.padawan.resources.PadawanResource;
 import co.planez.padawan.resources.UserResource;
 //import co.planez.padawan.resources.SlackClient;
 import io.dropwizard.assets.AssetsBundle;
+import io.dropwizard.auth.AuthDynamicFeature;
+import io.dropwizard.auth.oauth.OAuthCredentialAuthFilter;
 import io.dropwizard.configuration.EnvironmentVariableSubstitutor;
 import io.dropwizard.configuration.SubstitutingSourceProvider;
 import io.dropwizard.core.Application;
@@ -56,6 +61,14 @@ public class PadawanService extends Application<PadawanConfiguration> {
 	public void run(PadawanConfiguration config, Environment env) throws Exception {
 		env.jersey().setUrlPattern("/api/*");
 		
+        env.jersey().register(new AuthDynamicFeature(
+                new OAuthCredentialAuthFilter.Builder<User>()
+                    .setAuthenticator(new ApplicationAuthenticator())
+                    .setAuthorizer(new ApplicationAuthorizer())
+                    .setRealm("Planez Padawan")
+                    .setPrefix("Bearer")
+                    .buildAuthFilter()));
+        
 		// Get the startup date/time in GMT
 		SimpleDateFormat dateFormatGmt = new SimpleDateFormat("yyyy-MMM-dd HH:mm:ss");
 		dateFormatGmt.setTimeZone(TimeZone.getTimeZone("GMT"));
